@@ -49,9 +49,6 @@ def clean_data(df):
 
         # convert column from string to numeric
         categories[column] = categories[column].astype(int)
-    
-    #converts values to binary
-    categories['related'] = categories.related.replace({2:1})
   
     # drop the original categories column from `df`
     df.drop('categories', axis = 1, inplace = True)
@@ -65,11 +62,11 @@ def clean_data(df):
     return df
 
 
-def save_data(df, database_filepath):
+def save_data(df, database_filename):
     """
     Save the data in a SQLite database
     """
-    engine = create_engine(f'sqlite:///{database_filepath}')
+    engine = create_engine('sqlite:///DisasterResponse.db')
     df.to_sql('disaster_messages', engine, index=False, if_exists='replace')
 
 

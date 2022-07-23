@@ -124,16 +124,9 @@ def evaluate_model(model, X_test, Y_test, categories):
     y_pred = model.predict(X_test)
     
     # build classification report on each column
-    performance = []
-    for i in range(len(Y_test.columns)):
-        performance.append([f1_score(Y_test.iloc[:, i].values, y_pred[:, i], average='micro'),
-                             precision_score(Y_test.iloc[:, i].values, y_pred[:, i], average='micro'),
-                             recall_score(Y_test.iloc[:, i].values, y_pred[:, i], average='micro')])
-    # build dataframe
-    performance = pd.DataFrame(performance, columns=['f1 score', 'precision', 'recall'],
-                                index = categories)   
-    return performance
-
+    for index, column in enumerate(Y_test):
+        print(column, classification_report(Y_test[column], y_pred[:, index]))
+    
 
 def save_model(model, model_filepath):
     
